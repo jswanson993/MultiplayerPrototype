@@ -1,7 +1,12 @@
 extends CharacterBody2D
 
 const SPEED = 300.0
+const  MAX_HEALTH = 100.0
+var current_health = 0
 var client_input := Vector2.ZERO
+
+func _ready() -> void:
+	current_health = MAX_HEALTH
 
 func _physics_process(_delta):
 # Check if this client actually owns this player node
@@ -53,3 +58,11 @@ func request_pickup_server(item_path: NodePath):
 	
 	if item != null and item is Node2D:
 		attempt_pickup(item)
+
+func take_damage(damage: float):
+	print_debug("Taking Damage")
+	current_health -= damage;
+	current_health = clamp(0, MAX_HEALTH, current_health)
+	if(current_health == 0):
+		print_debug("Player Dead")
+	

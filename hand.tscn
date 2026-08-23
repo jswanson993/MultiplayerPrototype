@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://clfejq3ck7hvc"]
+
+[ext_resource type="Script" uid="uid://cjab7x4aladlq" path="res://hand.gd" id="1_bfasp"]
+[ext_resource type="Texture2D" uid="uid://d1c0cy62irjit" path="res://playerDot.svg" id="1_u4p2i"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6kggx"]
+radius = 23.345236
+
+[node name="Hand" type="Area2D" unique_id=1372749605]
+script = ExtResource("1_bfasp")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=332174075]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_u4p2i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1900728231]
+shape = SubResource("CircleShape2D_6kggx")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
