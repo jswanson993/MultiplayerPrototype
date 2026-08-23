@@ -14,5 +14,5 @@ func _process(delta: float) -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
-	if(is_punching):
+	if is_punching and body != get_parent():
 		body.take_damage(DAMAGE)

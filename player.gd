@@ -12,11 +12,15 @@ func _physics_process(_delta):
 # Check if this client actually owns this player node
 	if multiplayer.get_unique_id() == str(name).to_int():
 		var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+		var attack_input = Input.get_action_strength("ui_attack")
 		
 		if(input_dir != Vector2(0, 0)):
+			pass	
+		if(attack_input != 1):
 			pass
 		# Send input directly to the server (peer id 1)
 		send_input_to_server.rpc_id(1, input_dir)
+		send_attack_input_to_server.rpc_id(1, attack_input)
 
 @rpc("any_peer", "call_local", "unreliable_ordered")
 func send_input_to_server(input_dir: Vector2):
@@ -35,6 +39,13 @@ func send_input_to_server(input_dir: Vector2):
 
 	# Server moves the body; Synchronizer replicates the new position
 	move_and_slide()
+		
+@rpc("any_peer", "call_local", "reliable")
+func send_attack_input_to_server(attack_input: float):
+	if not multiplayer.is_server():
+		return
+	if attack_input > 0:
+		$AnimationPlayer.play("punch")
 		
 const PICKUP_RANGE = 50.0
 var inventory: Array[String] = []
