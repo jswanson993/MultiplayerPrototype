@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://duymeli6w1hp" path="res://pickup.tscn" id="1_sofjq"]
 [ext_resource type="Texture2D" uid="uid://cosfisv3mpfiq" path="res://icon.svg" id="2_rmi1n"]
+[ext_resource type="PackedScene" uid="uid://bj2p52n6vj2cm" path="res://game_mode_trigger.tscn" id="3_rmi1n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o2wld"]
 size = Vector2(126, 126)
@@ -14,3 +15,5 @@ shape = SubResource("RectangleShape2D_o2wld")
 
 [node name="Sprite2D" parent="." index="1" unique_id=812008466]
 texture = ExtResource("2_rmi1n")
+
+[node name="GameModeTrigger" parent="." index="2" unique_id=1874350016 instance=ExtResource("3_rmi1n")]

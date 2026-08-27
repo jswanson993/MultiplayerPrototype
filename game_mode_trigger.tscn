@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bj2p52n6vj2cm"]
+
+[ext_resource type="Script" uid="uid://c14d0ot10he0c" path="res://game_mode_trigger.gd" id="1_v4hjk"]
+
+[node name="GameModeTrigger" type="Node" unique_id=1874350016]
+script = ExtResource("1_v4hjk")
