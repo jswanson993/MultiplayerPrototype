@@ -1,12 +1,20 @@
 extends CharacterBody2D
 
-const SPEED = 300.0
-const  MAX_HEALTH = 100.0
+@export var speed = 300.0
+@export var max_health = 100.0
 var current_health = 0
 var client_input := Vector2.ZERO
+var current_weapon : Node
 
 func _ready() -> void:
-	current_health = MAX_HEALTH
+	# Set starting weapon to hand
+	current_weapon = $WeaponPoint/Hand
+	current_health = max_health
+	# Set camera to player camera
+	if name == str(multiplayer.get_unique_id()):
+		$Camera2D.make_current() 
+	else:
+		$Camera2D.enabled = false
 
 func _physics_process(_delta):
 	var mouse_position = get_global_mouse_position()
@@ -16,7 +24,7 @@ func _physics_process(_delta):
 		var attack_input = Input.get_action_strength("ui_attack")
 		
 		if(input_dir != Vector2(0, 0)):
-			pass	
+			pass
 		if(attack_input != 1):
 			pass
 		
@@ -34,11 +42,11 @@ func send_input_to_server(input_dir: Vector2):
 	var direction = (Vector2(input_dir.x, input_dir.y)).normalized()
 	
 	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.y = direction.y * SPEED
+		velocity.x = direction.x * speed
+		velocity.y = direction.y * speed
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.y = move_toward(velocity.y, 0, SPEED)
+		velocity.x = move_toward(velocity.x, 0, speed)
+		velocity.y = move_toward(velocity.y, 0, speed)
 
 	# Server moves the body; Synchronizer replicates the new position
 	move_and_slide()
@@ -48,42 +56,31 @@ func send_attack_input_to_server(attack_input: float):
 	if not multiplayer.is_server():
 		return
 	if attack_input > 0:
-		$AnimationPlayer.play("punch")
+		current_weapon.use()
 	
 @rpc("any_peer", "call_local", "unreliable")
 func send_rotation_input_to_server(mouse_position: Vector2):
 	if not multiplayer.is_server():
 		return
 	look_at(mouse_position)
-		
-		
-const PICKUP_RANGE = 50.0
-var inventory: Array[String] = []
-
-func attempt_pickup(item: Node2D):
-	if multiplayer.has_multiplayer_peer() and not multiplayer.is_server():
-		return
-		
-	if global_position.distance_to(item.global_position) <= PICKUP_RANGE:
-		inventory.append(item.name)
-		item.queue_free()
-
-@rpc("any_peer", "call_local", "reliable")
-func request_pickup_server(item_path: NodePath):
-	var sender = multiplayer.get_remote_sender_id()
 	
-	if sender !=0 or str(sender) != name:
-		return
-	
-	var item = get_node_or_null(item_path)
-	
-	if item != null and item is Node2D:
-		attempt_pickup(item)
+## Picks up item and equips it
+func pickup(item: PackedScene):
+	if multiplayer.is_server():
+		server_pickup.rpc(item.resource_path)
 
+@rpc("authority", "call_local", "reliable")
+func server_pickup(item_path: String):
+	var item = load(item_path)
+	current_weapon.queue_free()
+	current_weapon = item.instantiate()
+	current_weapon.set_name("weapon")
+	$WeaponPoint.add_child(current_weapon)
+	
+## Reduces health by damage taken. When health hits zero player dies
 func take_damage(damage: float):
-	print_debug("Taking Damage")
 	current_health -= damage;
-	current_health = clamp(0, MAX_HEALTH, current_health)
+	current_health = clamp(0, max_health, current_health)
 	if(current_health == 0):
 		print_debug("Player Dead")
 	

@@ -8,62 +8,12 @@
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
-properties/1/path = NodePath("Hand:position")
+properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
-properties/2/path = NodePath(".:rotation")
-properties/2/spawn = true
-properties/2/replication_mode = 1
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_q8uxy"]
-radius = 62.0
-
-[sub_resource type="Animation" id="Animation_hqtel"]
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Hand:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, -75), Vector2(0, -90)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Hand:is_punching")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-
-[sub_resource type="Animation" id="Animation_sweqy"]
-resource_name = "punch"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Hand:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(0, -75), Vector2(90, 0), Vector2(0, -75)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_2hs0m"]
-_data = {
-&"RESET": SubResource("Animation_hqtel"),
-&"punch": SubResource("Animation_sweqy")
-}
+radius = 36.0
 
 [node name="Player" type="CharacterBody2D" unique_id=1576082805]
 motion_mode = 1
@@ -71,7 +21,8 @@ script = ExtResource("1_onrkg")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1963528295]
 modulate = Color(0.16078432, 0.28235295, 1, 1)
-scale = Vector2(0.26282048, 0.26282048)
+position = Vector2(-3.8146973e-06, 0)
+scale = Vector2(0.15, 0.15)
 texture = ExtResource("2_onrkg")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1550764943]
@@ -82,9 +33,7 @@ shape = SubResource("CircleShape2D_q8uxy")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=844935580]
 
-[node name="Hand" parent="." unique_id=2108479099 instance=ExtResource("3_i3pqv")]
-position = Vector2(0, -75)
-is_punching = true
+[node name="WeaponPoint" type="Node2D" parent="." unique_id=1580729711]
+position = Vector2(17, -43)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=744647144]
-libraries/ = SubResource("AnimationLibrary_2hs0m")
+[node name="Hand" parent="WeaponPoint" unique_id=1189579635 instance=ExtResource("3_i3pqv")]

@@ -1,19 +1,97 @@
 [gd_scene format=3 uid="uid://clfejq3ck7hvc"]
 
 [ext_resource type="Script" uid="uid://cjab7x4aladlq" path="res://hand.gd" id="1_bfasp"]
-[ext_resource type="Texture2D" uid="uid://d1c0cy62irjit" path="res://playerDot.svg" id="1_u4p2i"]
+[ext_resource type="PackedScene" uid="uid://b5yxfgh04xgb2" path="res://weapon.tscn" id="1_u4p2i"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_6kggx"]
-radius = 23.345236
+[sub_resource type="CircleShape2D" id="CircleShape2D_u4p2i"]
+radius = 18.027756
 
-[node name="Hand" type="Area2D" unique_id=1372749605]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bfasp"]
+load_path = "res://.godot/imported/playerDot.svg-05db18ff9df4f82ca46db2e3394cde1f.ctex"
+
+[sub_resource type="Animation" id="Animation_e75s6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../..:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../..:is_punching")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_wymn8"]
+resource_name = "punch"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../..:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(60, 50), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../..:is_punching")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3q536"]
+_data = {
+&"RESET": SubResource("Animation_e75s6"),
+&"punch": SubResource("Animation_wymn8")
+}
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_e75s6"]
+properties/0/path = NodePath("../..:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[node name="Hand" unique_id=1189579635 instance=ExtResource("1_u4p2i")]
 script = ExtResource("1_bfasp")
+is_punching = false
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=332174075]
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("1_u4p2i")
+[node name="CollisionShape2D" parent="Area2D" parent_id_path=PackedInt32Array(357976401) index="0" unique_id=428234114]
+shape = SubResource("CircleShape2D_u4p2i")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1900728231]
-shape = SubResource("CircleShape2D_6kggx")
+[node name="Sprite2D" parent="." index="1" unique_id=979049406]
+modulate = Color(0.2767785, 0.5026542, 0.66661155, 1)
+scale = Vector2(0.074, 0.074)
+texture = SubResource("CompressedTexture2D_bfasp")
 
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2" unique_id=1106571452]
+root_node = NodePath("../Area2D/CollisionShape2D")
+libraries/ = SubResource("AnimationLibrary_3q536")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="3" unique_id=1471933897]
+root_path = NodePath("../Area2D/CollisionShape2D")
+replication_config = SubResource("SceneReplicationConfig_e75s6")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]

@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://duymeli6w1hp"]
+
+[ext_resource type="Script" uid="uid://cc3bq0jj5kb0a" path="res://pickup.gd" id="1_iqk3k"]
+
+[node name="Node2D" type="Node2D" unique_id=1938134242]
+script = ExtResource("1_iqk3k")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1755289636]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2084823114]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=812008466]
+
+[connection signal="body_shape_entered" from="Area2D" to="." method="_on_area_2d_body_shape_entered"]

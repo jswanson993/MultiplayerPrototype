@@ -1,4 +1,4 @@
-extends Area2D
+extends "res://weapon.gd"
 
 @export var is_punching = false
 const DAMAGE = 10.0
@@ -7,6 +7,8 @@ const DAMAGE = 10.0
 func _ready() -> void:
 	pass # Replace with function body.
 
+func use() -> void:
+	$AnimationPlayer.play("punch")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -19,4 +21,5 @@ func _on_body_entered(body: Node2D) -> void:
 
 @rpc("authority", "call_local", "reliable")
 func request_deal_damage_server(body: Node2D):
-	body.take_damage(DAMAGE)
+	if(body.has_method("take_damage")):
+		body.take_damage(DAMAGE)

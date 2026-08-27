@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dub2jcqk3mvl8"]
+
+[ext_resource type="PackedScene" uid="uid://duymeli6w1hp" path="res://pickup.tscn" id="1_sofjq"]
+[ext_resource type="Texture2D" uid="uid://cosfisv3mpfiq" path="res://icon.svg" id="2_rmi1n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o2wld"]
+size = Vector2(126, 126)
+
+[node name="KnifePickup" unique_id=1108070837 instance=ExtResource("1_sofjq")]
+
+[node name="CollisionShape2D" parent="Area2D" parent_id_path=PackedInt32Array(1755289636) index="0" unique_id=2084823114]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_o2wld")
+
+[node name="Sprite2D" parent="." index="1" unique_id=812008466]
+texture = ExtResource("2_rmi1n")
