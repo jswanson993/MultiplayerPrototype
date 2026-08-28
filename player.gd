@@ -6,6 +6,8 @@ var current_health = 0
 var client_input := Vector2.ZERO
 var current_weapon : Node
 
+signal died(player)
+
 func _ready() -> void:
 	# Set starting weapon to hand
 	current_weapon = $WeaponPoint/Hand
@@ -82,5 +84,5 @@ func take_damage(damage: float):
 	current_health -= damage;
 	current_health = clamp(0, max_health, current_health)
 	if(current_health == 0):
-		print_debug("Player Dead")
-	
+		if multiplayer.is_server():
+			died.emit(self)

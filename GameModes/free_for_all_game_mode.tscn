@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cke5f34b4sxru"]
+
+[ext_resource type="Script" uid="uid://d3djuydgc2ryo" path="res://GameModes/free_for_all_game_mode.gd" id="1_xcgck"]
+
+[node name="FreeForAllGameMode" type="Node" unique_id=909875453]
+script = ExtResource("1_xcgck")
