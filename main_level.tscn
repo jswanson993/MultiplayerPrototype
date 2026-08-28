@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cp71kjvnirvth" path="res://Tiles.png" id="2_6614m"]
 [ext_resource type="PackedScene" uid="uid://dub2jcqk3mvl8" path="res://knife_pickup.tscn" id="3_bhu08"]
 [ext_resource type="PackedScene" uid="uid://b5yxfgh04xgb2" path="res://weapon.tscn" id="4_05as6"]
+[ext_resource type="PackedScene" uid="uid://dq255u12114nt" path="res://GameModes/exploration_game_mode.tscn" id="5_5ymk8"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_bmrve"]
 
@@ -55,3 +56,5 @@ spawn_path = NodePath("../Players")
 [node name="KnifePickup" parent="." unique_id=1108070837 instance=ExtResource("3_bhu08")]
 position = Vector2(867, 264)
 item = ExtResource("4_05as6")
+
+[node name="ExplorationGameMode" parent="." unique_id=1375223244 instance=ExtResource("5_5ymk8")]

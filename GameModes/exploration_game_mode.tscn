@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://dq255u12114nt"]
+
+[ext_resource type="Script" uid="uid://bn1nyiqi5p0ex" path="res://GameModes/exploration_game_mode.gd" id="1_0wvrx"]
+
+[node name="ExplorationGameMode" type="Node" unique_id=575931675]
+script = ExtResource("1_0wvrx")
+
+[node name="Timer" type="Timer" parent="." unique_id=125948371]
+wait_time = 5.0
+one_shot = true
+
+[node name="TimeLabel" type="Label" parent="." unique_id=1966330428]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+text = "Test"
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

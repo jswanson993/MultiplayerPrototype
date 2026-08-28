@@ -3,6 +3,8 @@ extends Node2D
 var peer = ENetMultiplayerPeer.new()
 var player_scene = preload("res://player.tscn")
 
+signal game_started
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$Host.pressed.connect(host_game)
@@ -14,6 +16,7 @@ func host_game():
 	multiplayer.peer_connected.connect(spawn_player)
 	spawn_player(1)
 	hide_buttons()
+	game_started.emit()
 	
 func join_game():
 	peer.create_client("127.0.0.1", 8910)
