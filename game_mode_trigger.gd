@@ -12,13 +12,20 @@ func _process(delta: float) -> void:
 	pass
 	
 func on_pickup_triggered():
-
-	print_debug("triggered")
-	trigger_game_mode_change()
-
-func trigger_game_mode_change():
 	if not multiplayer.is_server():
 		return
 	var game_mode_base = get_tree().get_first_node_in_group("game_mode_manager")
+	if not game_mode_base.has_method("should_change_game_mode"):
+		return
+	var trigger_change = game_mode_base.should_change_game_mode()
+	if trigger_change == false:
+		print_debug("not triggered")
+		return
+	print_debug("triggered")
+	trigger_game_mode_change(game_mode_base)
+
+func trigger_game_mode_change(game_mode_base : Node):
+	if not multiplayer.is_server():
+		return
 	if game_mode_base.has_method("change_game_mode"):
 		game_mode_base.change_game_mode(game_mode_scene)

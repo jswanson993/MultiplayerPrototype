@@ -22,7 +22,7 @@ physics_layer_0/collision_layer = 1
 physics_layer_0/physics_material = SubResource("PhysicsMaterial_bmrve")
 sources/0 = SubResource("TileSetAtlasSource_bhu08")
 
-[node name="MainLevel" type="Node2D" unique_id=697239694]
+[node name="MainLevel" type="Node2D" unique_id=697239694 groups=["level"]]
 script = ExtResource("1_bw3m6")
 
 [node name="Ground" type="TileMapLayer" parent="." unique_id=1990184768]
@@ -61,7 +61,6 @@ item = ExtResource("4_05as6")
 [node name="GameModeBase" type="Node" parent="." unique_id=1134465261 node_paths=PackedStringArray("player_container") groups=["game_mode_manager"]]
 script = ExtResource("5_4mnpp")
 player_container = NodePath("../Players")
+chance_to_change = 90
 
 [node name="ExplorationGameMode" parent="GameModeBase" unique_id=1375223244 instance=ExtResource("5_5ymk8")]
-
-[node name="UI" type="Node" parent="." unique_id=2084149514 groups=["ui"]]

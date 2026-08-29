@@ -4,6 +4,7 @@ var peer = ENetMultiplayerPeer.new()
 var player_scene = preload("res://player.tscn")
 
 signal game_started
+signal player_joined(CharacterBody2D)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -27,6 +28,7 @@ func spawn_player(id):
 	var player = player_scene.instantiate()
 	player.name = str(id)
 	get_node("Players").add_child(player)
+	player_joined.emit(player)
 	
 func hide_buttons():
 	$Host.hide()
