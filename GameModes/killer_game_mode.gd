@@ -1,29 +1,28 @@
-class_name free_for_all 
+class_name killer
 extends "res://GameModes/game_mode.gd"
-var players = []
-
+var killer : CharacterBody2D
+var bystanders = []
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if not multiplayer.is_server():
 		return
+	print_debug("Started Killer Game Mode")
 	if "player_container" not in get_parent():
 		return
-	players = get_parent().player_container.get_children()
+	var players = get_parent().player_container.get_children()
 	for player in players:
 		player.died.connect(on_player_death)
+		if "killer" in player.tags:
+			self.killer = player
+		else:
+			bystanders.add(player)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
-
-func clean():
-	pass
-
-func on_player_death(player):
+	
+func on_player_death(player: CharacterBody2D):
 	if not multiplayer.is_server():
 		return
-	var player_index = players.find(player)
-	players.remove_at(player_index)
-	if players.size() == 1:
-		print_debug("Player: " + str(players[0]) + " won")
+	print_debug("player_died")

@@ -5,7 +5,7 @@ extends CharacterBody2D
 var current_health = 0
 var client_input := Vector2.ZERO
 var current_weapon : Node
-
+var tags = []
 signal died(player)
 
 func _ready() -> void:

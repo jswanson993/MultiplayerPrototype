@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://hrgee2vurub1"]
+
+[ext_resource type="Script" uid="uid://bu04x7kqvutl" path="res://GameModes/killer_game_mode.gd" id="1_xykki"]
+
+[node name="KillerGameMode" type="Node" unique_id=1862697281]
+script = ExtResource("1_xykki")
