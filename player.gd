@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var speed = 300.0
+var speed = 300.0
 @export var max_health = 100.0
 var current_health = 0
 var client_input := Vector2.ZERO
@@ -21,7 +21,10 @@ func _ready() -> void:
 	set_multiplayer_authority(int(name))
 
 func _physics_process(_delta):
-	pass
+	var input_direction = %InputSynchronizer.input_direction
+	var mouse_position = %InputSynchronizer.mouse_position
+	%MovementSynchronizer.process_client_movement(self, input_direction)
+	%MovementSynchronizer.process_client_rotation(self, mouse_position)
 # Check if this client actually owns this player node
 	#if multiplayer.get_unique_id() == str(name).to_int():
 	#if is_multiplayer_authority():

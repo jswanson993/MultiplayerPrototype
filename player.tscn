@@ -38,6 +38,7 @@ replication_config = SubResource("SceneReplicationConfig_sweqy")
 script = ExtResource("3_hqtel")
 
 [node name="MovementSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1550764943]
+unique_name_in_owner = true
 replication_config = SubResource("SceneReplicationConfig_onrkg")
 script = ExtResource("3_sweqy")
 
