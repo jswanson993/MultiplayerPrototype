@@ -7,6 +7,7 @@ var client_input := Vector2.ZERO
 var current_weapon : Node
 var tags = []
 signal died(player)
+var moves = []
 
 func _ready() -> void:
 	# Set starting weapon to hand
@@ -17,23 +18,34 @@ func _ready() -> void:
 		$Camera2D.make_current() 
 	else:
 		$Camera2D.enabled = false
+	set_multiplayer_authority(int(name))
 
 func _physics_process(_delta):
-	var mouse_position = get_global_mouse_position()
+	pass
 # Check if this client actually owns this player node
-	if multiplayer.get_unique_id() == str(name).to_int():
-		var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-		var attack_input = Input.get_action_strength("ui_attack")
+	#if multiplayer.get_unique_id() == str(name).to_int():
+	#if is_multiplayer_authority():
+	#	client_process()
 		
-		if(input_dir != Vector2(0, 0)):
-			pass
-		if(attack_input != 1):
-			pass
+
 		
 		# Send input directly to the server (peer id 1)
-		send_input_to_server.rpc_id(1, input_dir)
-		send_attack_input_to_server.rpc_id(1, attack_input)
-		send_rotation_input_to_server.rpc_id(1, mouse_position)
+	#	send_input_to_server.rpc_id(1, input_dir)
+	#	send_attack_input_to_server.rpc_id(1, attack_input)
+	#	send_rotation_input_to_server.rpc_id(1, mouse_position)
+
+func client_process(delta):
+	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	var attack_input = Input.get_action_strength("ui_attack")
+	if(input_dir != Vector2(0, 0)):
+		pass
+	if(attack_input != 1):
+		pass
+		
+#func client_input(){
+#	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+#	var attack_input = Input.get_action_strength("ui_attack")
+#}
 
 @rpc("any_peer", "call_local", "unreliable_ordered")
 func send_input_to_server(input_dir: Vector2):
